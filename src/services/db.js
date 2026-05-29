@@ -68,7 +68,7 @@ const MOCK_ITEMS = [
 ];
 
 const MOCK_SETTINGS = {
-  whatsapp_number: '+9779801234567',
+  whatsapp_number: '+977981111891',
   delivery_available: 'true',
   admin_password: 'admin'
 };

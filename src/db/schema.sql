@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS settings (
 -- Seed initial settings
 INSERT INTO settings (key, value)
 VALUES 
-('whatsapp_number', '+9779801234567'),
+('whatsapp_number', '+977981111891'),
 ('delivery_available', 'true'),
 ('admin_password', 'admin123') -- Fallback standard password, can be changed
 ON CONFLICT (key) DO NOTHING;

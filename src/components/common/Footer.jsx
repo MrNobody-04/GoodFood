@@ -13,12 +13,20 @@ export default function Footer() {
         <Link 
           to="/" 
           onClick={handleLogoClick}
-          className="inline-flex items-center justify-center space-x-2"
+          className="inline-flex items-center justify-center space-x-3 group"
         >
+          <img 
+            src="/logo.png" 
+            alt="Good Food Logo" 
+            className="h-10 w-10 object-contain rounded-full border border-neutral-700 group-hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
+          />
           <span className="font-display font-extrabold text-2xl text-white tracking-wide">Good Food</span>
         </Link>
-        <p className="text-xs text-neutral-500 max-w-sm mx-auto leading-relaxed">
-          A hardworking couple's cloud kitchen providing fresh, hygienic, and delectable homemade meals delivered straight to you 24/7.
+        <p className="text-xs text-neutral-500 max-w-md mx-auto leading-relaxed">
+          Based in Bharatpur and delivering fresh homemade food across Bharatpur. Enjoy fast 24/7 delivery service from our two outlets in the city, prepared with love and care by Rohan & Anita.
         </p>
         
         <div className="flex justify-center space-x-6 text-sm text-neutral-400 font-semibold">

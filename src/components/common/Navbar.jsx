@@ -43,10 +43,22 @@ export default function Navbar({ setIsCartOpen, isDeliveryAvailable }) {
           <Link 
             to="/" 
             onClick={handleNavClick} 
-            className="flex items-center space-x-2 cursor-pointer group"
+            className="flex items-center space-x-3 cursor-pointer group"
           >
-            <div className="bg-brand text-white p-2 rounded-xl shadow-md transform group-hover:rotate-12 transition-transform duration-300">
-              <UtensilsCrossed size={22} />
+            <img 
+              src="/logo.png" 
+              alt="Good Food Logo" 
+              className="h-11 w-11 object-contain rounded-full shadow-md border border-brand/20 group-hover:scale-105 transition-transform duration-300"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                const fallback = e.target.parentElement.querySelector('.logo-fallback');
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+            <div className="logo-fallback hidden items-center space-x-2">
+              <div className="bg-brand text-white p-2 rounded-xl shadow-md">
+                <UtensilsCrossed size={22} />
+              </div>
             </div>
             <span className="font-display font-bold text-2xl tracking-wide bg-gradient-to-r from-brand to-accent-600 bg-clip-text text-transparent">
               Good Food

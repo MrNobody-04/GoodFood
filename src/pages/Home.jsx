@@ -103,7 +103,7 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-lg text-neutral-600 dark:text-neutral-300 max-w-xl mx-auto lg:mx-0 font-medium"
               >
-                Craving hot, healthy, and authentic homemade kitchen meals? Good Food cooks with love and brings gourmet Nepalese food, pizzas, momos, and desserts to your doorstep anytime, day or night.
+                Based in Bharatpur and delivering fresh homemade food across Bharatpur. Experience 24/7 fast home delivery from our two outlets in the city, prepared with love and care by Anita & Rohan.
               </motion.p>
 
               {/* Delivery Availability Status */}
@@ -269,10 +269,10 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
 
               <div className="space-y-4 text-neutral-600 dark:text-neutral-300 font-medium">
                 <p>
-                  <strong>Good Food</strong> was born out of a shared dream by a hardworking couple, Anita & Rohan. Rooted in their passion for genuine home cooking and hospitality, they turned their small home kitchen into a professional 24/7 cloud kitchen to serve clean, healthy, and premium meals.
+                  <strong>Good Food</strong> was born out of a shared dream by Anita & Rohan to serve the people of Bharatpur. With two outlets in the city, our cloud kitchen provides fast, 24/7 delivery of fresh homemade meals directly to your doorstep.
                 </p>
                 <p>
-                  "We realized how difficult it is to find high-quality, authentic home-cooked food late at night or during hectic work hours. That is why we cook everything ourselves, fresh from scratch, using traditional recipes and premium local products."
+                  "We are passionate about home cooking and customer satisfaction. That is why we cook everything ourselves from scratch, using traditional family recipes and fresh local Bharatpur ingredients, bringing hot and hygienic food to you day or night."
                 </p>
               </div>
 

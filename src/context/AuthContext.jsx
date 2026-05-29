@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (email, password, correctPassword) => {
-    const correctEmail = 'admin@goodfood.com';
+    const correctEmail = 'owner@goodfood.com';
     if (email === correctEmail && password === correctPassword) {
       setIsAuthenticated(true);
       sessionStorage.setItem('goodfood_admin_session', 'true');

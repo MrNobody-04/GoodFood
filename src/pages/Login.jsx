@@ -58,7 +58,7 @@ export default function Login({ settings, addToast }) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@goodfood.com"
+                placeholder="owner@goodfood.com"
                 className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:ring-1 focus:ring-brand focus:border-brand text-neutral-855 dark:text-neutral-105 text-sm font-semibold"
               />
             </div>
@@ -78,7 +78,7 @@ export default function Login({ settings, addToast }) {
 
           <div className="text-xs text-neutral-400 font-semibold bg-neutral-50 dark:bg-neutral-800/50 p-3 rounded-lg border border-neutral-200/50 dark:border-neutral-750 flex items-center gap-2">
             <KeyRound size={14} className="text-accent" />
-            <span>Default credentials: admin@goodfood.com / admin</span>
+            <span>Default credentials: owner@goodfood.com / admin</span>
           </div>
 
           <button
