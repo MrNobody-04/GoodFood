@@ -3,6 +3,7 @@ import { Save } from 'lucide-react';
 
 export default function SettingsTab({ settings, onUpdateSetting, addToast }) {
   const [whatsappVal, setWhatsappVal] = useState(settings.whatsapp_number || '');
+  const [supportVal, setSupportVal] = useState(settings.support_number || '');
   const [deliveryVal, setDeliveryVal] = useState(settings.delivery_available === 'true');
   const [newPasswordVal, setNewPasswordVal] = useState('');
 
@@ -11,6 +12,8 @@ export default function SettingsTab({ settings, onUpdateSetting, addToast }) {
     
     // Save WhatsApp
     await onUpdateSetting('whatsapp_number', whatsappVal);
+    // Save Support WhatsApp
+    await onUpdateSetting('support_number', supportVal);
     // Save Delivery Availability
     await onUpdateSetting('delivery_available', String(deliveryVal));
     
@@ -36,16 +39,31 @@ export default function SettingsTab({ settings, onUpdateSetting, addToast }) {
       <form onSubmit={handleUpdateSettings} className="space-y-5">
         {/* WhatsApp Target */}
         <div>
-          <label className="block text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">WhatsApp Number (For Orders)</label>
+          <label className="block text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">WhatsApp Number (For Orders & Call Kitchen)</label>
           <input
             type="text"
             value={whatsappVal}
             onChange={(e) => setWhatsappVal(e.target.value)}
-            placeholder="+9779848962315"
+            placeholder="+9779811117891"
             className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:ring-1 focus:ring-brand focus:border-brand text-neutral-850 dark:text-neutral-100 font-semibold"
           />
           <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1 leading-relaxed">
-            Include country code (e.g. `+977` for Nepal) without spaces or hyphens.
+            Target number for "Add to Tray" checkout orders and calling. Include country code (e.g. `+977` for Nepal).
+          </p>
+        </div>
+
+        {/* Support WhatsApp Target */}
+        <div>
+          <label className="block text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">WhatsApp Number (For Chat Support)</label>
+          <input
+            type="text"
+            value={supportVal}
+            onChange={(e) => setSupportVal(e.target.value)}
+            placeholder="+9779814562984"
+            className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:ring-1 focus:ring-brand focus:border-brand text-neutral-850 dark:text-neutral-100 font-semibold"
+          />
+          <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1 leading-relaxed">
+            Target number for floating chat support. Include country code (e.g. `+977` for Nepal).
           </p>
         </div>
 

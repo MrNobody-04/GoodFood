@@ -39,7 +39,8 @@ export default function App() {
 function AppContent() {
   const [menuItems, setMenuItems] = useState([]);
   const [settings, setSettings] = useState({
-    whatsapp_number: '+9779848962315',
+    whatsapp_number: '+9779811117891',
+    support_number: '+9779814562984',
     delivery_available: 'true',
     admin_password: 'admin'
   });
@@ -189,7 +190,10 @@ function AppContent() {
       />
 
       {/* Floating Speed Support Dials */}
-      <FloatingCallButton whatsappNumber={settings.whatsapp_number} />
+      <FloatingCallButton 
+        whatsappNumber={settings.whatsapp_number} 
+        supportNumber={settings.support_number} 
+      />
 
       {/* Toast Alert Popups */}
       <Toast toasts={toasts} removeToast={removeToast} />

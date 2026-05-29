@@ -76,6 +76,23 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
             
             {/* Title Block */}
             <div className="lg:col-span-7 text-center lg:text-left space-y-6">
+              {/* Hero Logo */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="flex justify-center lg:justify-start"
+              >
+                <img 
+                  src="/logo.png" 
+                  alt="Good Food Logo" 
+                  className="h-20 w-20 object-contain rounded-full shadow-lg border border-brand/25 p-1.5 bg-white dark:bg-neutral-800 hover:rotate-12 transition-transform duration-300"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </motion.div>
+
               <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}

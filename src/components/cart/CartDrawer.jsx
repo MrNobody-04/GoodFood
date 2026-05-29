@@ -44,8 +44,11 @@ export default function CartDrawer({
     message += `Please confirm my order.\n`;
     message += `Thank you ❤️`;
 
-    // Target WhatsApp Phone: +9779848962315 or configured setting
-    const targetPhone = whatsappNumber ? whatsappNumber.replace(/[^0-9]/g, '') : '9779848962315';
+    // Target WhatsApp Phone: ensure it has the 977 prefix
+    let targetPhone = whatsappNumber ? whatsappNumber.replace(/[^0-9]/g, '') : '9779811117891';
+    if (!targetPhone.startsWith('977') && (targetPhone.startsWith('98') || targetPhone.startsWith('97')) && (targetPhone.length === 9 || targetPhone.length === 10)) {
+      targetPhone = '977' + targetPhone;
+    }
 
     // Encode text
     const encodedText = encodeURIComponent(message);
