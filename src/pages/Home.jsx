@@ -331,7 +331,7 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
           </div>
         </div>
