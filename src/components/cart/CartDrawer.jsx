@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Minus, Plus, Trash2, Send, ShoppingBag, MapPin, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../hooks/useCart';
+import { dbService } from '../../services/db';
 
 export default function CartDrawer({ 
   isOpen, 
@@ -14,7 +15,7 @@ export default function CartDrawer({
   const [customerName, setCustomerName] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
 
-  const handleWhatsAppOrder = (e) => {
+  const handleWhatsAppOrder = async (e) => {
     e.preventDefault();
     if (cart.length === 0) return;
 
@@ -23,9 +24,32 @@ export default function CartDrawer({
       return;
     }
 
-    // Build the EXACT WhatsApp Message Template requested
+    addToast('Saving your order in the queue...', 'info');
+
+    let dbOrder = null;
+    try {
+      const orderPayload = {
+        customer_name: customerName.trim(),
+        delivery_address: deliveryAddress.trim(),
+        items: cart.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image_url: item.image_url
+        })),
+        total_price: totalPrice
+      };
+
+      dbOrder = await dbService.createOrder(orderPayload);
+    } catch (err) {
+      console.error('Failed to create order in database:', err);
+    }
+
+    // Build the EXACT WhatsApp Message Template
+    const orderIdDisplay = dbOrder ? `#${dbOrder.order_number}` : 'Pending';
     let message = `Hello Good Food 🍴\n\n`;
-    message += `I would like to place an order:\n\n`;
+    message += `I would like to place an order (Order ID: ${orderIdDisplay}):\n\n`;
     message += `━━━━━━━━━━━━━━\n`;
     message += `ORDER DETAILS\n`;
     message += `━━━━━━━━━━━━━━\n\n`;

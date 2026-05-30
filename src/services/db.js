@@ -363,5 +363,90 @@ export const dbService = {
     settings[key] = String(value);
     setLocalData('settings', settings);
     return true;
+  },
+
+  // Get all orders
+  getOrders: async () => {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('orders')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        return data;
+      } catch (err) {
+        console.error('Supabase query error for orders, loading local storage.', err);
+      }
+    }
+    return getLocalData('orders', []);
+  },
+
+  // Create a new order
+  createOrder: async (order) => {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('orders')
+          .insert([
+            {
+              customer_name: order.customer_name,
+              delivery_address: order.delivery_address,
+              items: order.items,
+              total_price: Number(order.total_price),
+              status: 'Pending'
+            }
+          ])
+          .select();
+        if (error) throw error;
+        return data[0];
+      } catch (err) {
+        console.error('Supabase order creation failed, writing to local storage instead.', err);
+      }
+    }
+
+    // Local Storage Mock
+    const orders = getLocalData('orders', []);
+    const newOrder = {
+      id: `order-local-${Date.now()}`,
+      order_number: orders.length + 1001, // Mock sequential Order Number
+      customer_name: order.customer_name,
+      delivery_address: order.delivery_address,
+      items: order.items,
+      total_price: Number(order.total_price),
+      status: 'Pending',
+      created_at: new Date().toISOString()
+    };
+    orders.push(newOrder);
+    setLocalData('orders', orders);
+    return newOrder;
+  },
+
+  // Update order status (Pending, Preparing, Completed, Cancelled)
+  updateOrderStatus: async (id, status) => {
+    const isMockOrLocalId = id.toString().startsWith('order-local');
+    if (isSupabaseConfigured && supabase && !isMockOrLocalId) {
+      try {
+        const { data, error } = await supabase
+          .from('orders')
+          .update({ status, updated_at: new Date().toISOString() })
+          .eq('id', id)
+          .select();
+        if (error) throw error;
+        return data[0];
+      } catch (err) {
+        console.error('Supabase order status update failed, writing to local storage instead.', err);
+      }
+    }
+
+    const orders = getLocalData('orders', []);
+    const idx = orders.findIndex(o => o.id === id);
+    if (idx !== -1) {
+      orders[idx].status = status;
+      orders[idx].updated_at = new Date().toISOString();
+      setLocalData('orders', orders);
+      return orders[idx];
+    }
+    return null;
   }
 };

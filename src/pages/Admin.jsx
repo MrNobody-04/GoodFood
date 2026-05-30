@@ -7,6 +7,8 @@ import MenuItemsTab from '../components/admin/MenuItemsTab';
 import SettingsTab from '../components/admin/SettingsTab';
 import AnalyticsTab from '../components/admin/AnalyticsTab';
 import MenuItemForm from '../components/admin/MenuItemForm';
+import { dbService } from '../services/db';
+import OrdersTab from '../components/admin/OrdersTab';
 
 export default function Admin({
   menuItems,
@@ -18,9 +20,11 @@ export default function Admin({
 }) {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('menu'); // menu, settings, analytics
+  const [activeTab, setActiveTab] = useState('orders'); // orders, menu, settings, analytics
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
 
   // Authenticate check
   useEffect(() => {
@@ -28,6 +32,37 @@ export default function Admin({
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
+
+  const fetchOrders = async () => {
+    if (!isAuthenticated) return;
+    setIsLoadingOrders(true);
+    try {
+      const data = await dbService.getOrders();
+      setOrders(data || []);
+    } catch (err) {
+      console.error('Failed to load orders', err);
+      addToast('Failed to load order queue.', 'error');
+    } finally {
+      setIsLoadingOrders(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchOrders();
+    }
+  }, [isAuthenticated]);
+
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
+    const updated = await dbService.updateOrderStatus(orderId, newStatus);
+    if (updated) {
+      addToast(`Order status updated to ${newStatus}!`, 'success');
+      // Update local state dynamically
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
+    } else {
+      addToast('Failed to update order status.', 'error');
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -91,6 +126,15 @@ export default function Admin({
 
           {/* Main Area */}
           <div className="lg:col-span-9">
+            {activeTab === 'orders' && (
+              <OrdersTab 
+                orders={orders} 
+                onUpdateStatus={handleUpdateOrderStatus}
+                isLoading={isLoadingOrders}
+                onRefresh={fetchOrders}
+              />
+            )}
+
             {activeTab === 'menu' && (
               <MenuItemsTab 
                 menuItems={menuItems} 

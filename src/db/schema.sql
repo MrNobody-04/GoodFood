@@ -225,3 +225,32 @@ CREATE POLICY "Allow public read settings" ON settings
 DROP POLICY IF EXISTS "Allow all writes for admins on settings" ON settings;
 CREATE POLICY "Allow all writes for admins on settings" ON settings
     FOR ALL TO public USING (true) WITH CHECK (true);
+
+-- 3. Create ORDERS Table
+CREATE TABLE IF NOT EXISTS orders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    order_number SERIAL,
+    customer_name TEXT NOT NULL,
+    delivery_address TEXT NOT NULL,
+    items JSONB NOT NULL,
+    total_price NUMERIC NOT NULL,
+    status TEXT DEFAULT 'Pending', -- 'Pending', 'Preparing', 'Completed', 'Cancelled'
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS for orders
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+
+-- Create Policies for orders (Anyone can create and read, Admin/Public can update status)
+DROP POLICY IF EXISTS "Allow public read orders" ON orders;
+CREATE POLICY "Allow public read orders" ON orders
+    FOR SELECT TO public USING (true);
+
+DROP POLICY IF EXISTS "Allow public insert orders" ON orders;
+CREATE POLICY "Allow public insert orders" ON orders
+    FOR INSERT TO public WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public update orders" ON orders;
+CREATE POLICY "Allow public update orders" ON orders
+    FOR UPDATE TO public USING (true) WITH CHECK (true);

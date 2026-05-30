@@ -1,8 +1,9 @@
 import React from 'react';
-import { Utensils, Settings, BarChart3 } from 'lucide-react';
+import { Utensils, Settings, BarChart3, ClipboardList } from 'lucide-react';
 
 export default function AdminSidebar({ activeTab, setActiveTab }) {
   const tabs = [
+    { id: 'orders', label: 'Active Orders', icon: <ClipboardList size={18} /> },
     { id: 'menu', label: 'Menu Items', icon: <Utensils size={18} /> },
     { id: 'settings', label: 'Order Settings', icon: <Settings size={18} /> },
     { id: 'analytics', label: 'Kitchen Analytics', icon: <BarChart3 size={18} /> }
