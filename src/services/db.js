@@ -1,6 +1,8 @@
 // Good Food Database Service Adapter
 // Supports Supabase with automatic local storage fallback for standalone demo testing.
 
+import { createClient } from '@supabase/supabase-js';
+
 const MOCK_ITEMS = [
   // Non Veg Snacks Chicken
   { id: 'item-nv-1', name: 'Buff Sukuti', description: 'Dry spiced jerky of buffalo meat, cooked with local herbs and spices.', price: 320, category: 'Snacks', image_url: 'https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=600&q=80', is_available: true },
@@ -182,20 +184,14 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 let supabase = null;
 
-const isSupabaseConfigured = supabaseUrl && supabaseAnonKey;
+const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
 
 if (isSupabaseConfigured) {
   try {
-    // Dynamically importing supabase to handle cases where it isn't installed yet
-    // or we are running in simple mock environments
-    import('@supabase/supabase-js').then(({ createClient }) => {
-      supabase = createClient(supabaseUrl, supabaseAnonKey);
-      console.log('Good Food: Supabase backend connected.');
-    }).catch(err => {
-      console.warn('Failed to load Supabase module. Falling back to local storage.', err);
-    });
+    supabase = createClient(supabaseUrl, supabaseAnonKey);
+    console.log('Good Food: Supabase backend connected.');
   } catch (e) {
-    console.warn('Supabase initialization failed. Using LocalStorage fallback.');
+    console.warn('Supabase initialization failed. Using LocalStorage fallback.', e);
   }
 } else {
   console.log('Good Food: Supabase keys missing. Running in Local Preview mode (LocalStorage).');
