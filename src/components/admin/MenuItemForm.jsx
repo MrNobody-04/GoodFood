@@ -120,7 +120,7 @@ export default function MenuItemForm({ isOpen, onClose, editingItem, onSave, add
                       onChange={(e) => setCategory(e.target.value)}
                       className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl text-neutral-850 dark:text-neutral-100 text-sm font-semibold focus:ring-1 focus:ring-brand focus:border-brand cursor-pointer"
                     >
-                      {['Pizza', 'Burgers', 'Momo', 'Nepali Foods', 'Drinks', 'Desserts'].map(cat => (
+                      {['Momo', 'Snacks', 'Noodles', 'Biriyani', 'Burgers & Rolls', 'Pizza', 'Rice & Roti', 'Khaja & Curry', 'Special Items'].map(cat => (
                         <option key={cat} value={cat}>{cat}</option>
                       ))}
                     </select>

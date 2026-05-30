@@ -9,7 +9,18 @@ export default function Menu({ menuItems, addToast }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const categories = ['All', 'Pizza', 'Burgers', 'Momo', 'Nepali Foods', 'Drinks', 'Desserts'];
+  const categories = [
+    'All', 
+    'Momo', 
+    'Snacks', 
+    'Noodles', 
+    'Biriyani', 
+    'Burgers & Rolls', 
+    'Pizza', 
+    'Rice & Roti', 
+    'Khaja & Curry', 
+    'Special Items'
+  ];
 
   // Filter logic
   const filteredItems = useMemo(() => {
