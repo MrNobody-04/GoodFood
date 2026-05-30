@@ -8,6 +8,8 @@ export default function Login({ settings, addToast }) {
   const { isAuthenticated, login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [clickCount, setClickCount] = useState(0);
+  const [showShortcut, setShowShortcut] = useState(false);
   const navigate = useNavigate();
 
   // If already authenticated, redirect immediately to admin
@@ -30,6 +32,17 @@ export default function Login({ settings, addToast }) {
     }
   };
 
+  const handleHeaderClick = () => {
+    setClickCount(prev => {
+      const next = prev + 1;
+      if (next >= 5) {
+        setShowShortcut(true);
+        addToast('Developer shortcut activated! Default credentials shown.', 'info');
+      }
+      return next;
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 via-white to-accent-50/30 dark:from-darkBg-dark dark:via-darkBg dark:to-brand-950/20 py-24 px-4 sm:px-6 lg:px-8">
       <motion.div 
@@ -37,8 +50,12 @@ export default function Login({ settings, addToast }) {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-md w-full space-y-8 bg-white dark:bg-neutral-850 p-8 sm:p-10 rounded-[2rem] border border-neutral-100 dark:border-neutral-800 shadow-premium"
       >
-        <div className="text-center space-y-3">
-          <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-2xl bg-brand/10 dark:bg-brand/20 text-brand">
+        <div 
+          onClick={handleHeaderClick} 
+          className="text-center space-y-3 cursor-pointer select-none group"
+          title="Click 5 times for assistance"
+        >
+          <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-2xl bg-brand/10 dark:bg-brand/20 text-brand group-hover:scale-105 transition-transform duration-200">
             <Lock size={28} />
           </div>
           <h2 className="font-display font-extrabold text-3xl text-neutral-900 dark:text-white">
@@ -59,7 +76,7 @@ export default function Login({ settings, addToast }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="owner@goodfood.com"
-                className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:ring-1 focus:ring-brand focus:border-brand text-neutral-855 dark:text-neutral-105 text-sm font-semibold"
+                className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:ring-1 focus:ring-brand focus:border-brand text-neutral-850 dark:text-neutral-100 text-sm font-semibold"
               />
             </div>
 
@@ -71,15 +88,21 @@ export default function Login({ settings, addToast }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:ring-1 focus:ring-brand focus:border-brand text-neutral-855 dark:text-neutral-105 text-sm font-semibold"
+                className="w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:ring-1 focus:ring-brand focus:border-brand text-neutral-850 dark:text-neutral-100 text-sm font-semibold"
               />
             </div>
           </div>
 
-          <div className="text-xs text-neutral-400 font-semibold bg-neutral-50 dark:bg-neutral-800/50 p-3 rounded-lg border border-neutral-200/50 dark:border-neutral-750 flex items-center gap-2">
-            <KeyRound size={14} className="text-accent" />
-            <span>Default credentials: owner@goodfood.com / admin</span>
-          </div>
+          {showShortcut && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-xs text-neutral-400 font-semibold bg-neutral-50 dark:bg-neutral-800/50 p-3 rounded-lg border border-neutral-200/50 dark:border-neutral-750 flex items-center gap-2"
+            >
+              <KeyRound size={14} className="text-accent" />
+              <span>Default credentials: owner@goodfood.com / admin</span>
+            </motion.div>
+          )}
 
           <button
             type="submit"

@@ -209,15 +209,19 @@ ALTER TABLE menu_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
 
 -- Create Policies for menu_items (Anyone can read, Admins can write)
+DROP POLICY IF EXISTS "Allow public read menu_items" ON menu_items;
 CREATE POLICY "Allow public read menu_items" ON menu_items
     FOR SELECT TO public USING (true);
 
+DROP POLICY IF EXISTS "Allow all writes for admins on menu_items" ON menu_items;
 CREATE POLICY "Allow all writes for admins on menu_items" ON menu_items
     FOR ALL TO public USING (true) WITH CHECK (true);
 
 -- Create Policies for settings (Anyone can read, Admins can write)
+DROP POLICY IF EXISTS "Allow public read settings" ON settings;
 CREATE POLICY "Allow public read settings" ON settings
     FOR SELECT TO public USING (true);
 
+DROP POLICY IF EXISTS "Allow all writes for admins on settings" ON settings;
 CREATE POLICY "Allow all writes for admins on settings" ON settings
     FOR ALL TO public USING (true) WITH CHECK (true);

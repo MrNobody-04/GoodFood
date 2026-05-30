@@ -82,20 +82,22 @@ export default function CartDrawer({
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 right-0 max-w-full flex pl-10 z-50"
+            transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+            className="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-10 z-50"
           >
-            <div className="w-screen max-w-md bg-white dark:bg-neutral-900 shadow-2xl flex flex-col justify-between border-l border-neutral-100 dark:border-neutral-800">
+            <div className="w-screen max-w-md bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md shadow-2xl flex flex-col justify-between border-l border-neutral-100 dark:border-neutral-800">
               
               {/* Header */}
-              <div className="p-6 border-b border-neutral-150 dark:border-neutral-800 flex items-center justify-between">
-                <div className="flex items-center space-x-2.5">
-                  <ShoppingBag className="text-brand" size={22} />
-                  <h2 className="font-display font-extrabold text-2xl text-neutral-900 dark:text-white">Your Cart</h2>
+              <div className="p-6 border-b border-neutral-100 dark:border-neutral-800 flex items-center justify-between bg-white/50 dark:bg-neutral-900/50 backdrop-blur-xs">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-brand/10 rounded-xl text-brand">
+                    <ShoppingBag size={20} />
+                  </div>
+                  <h2 className="font-display font-extrabold text-xl text-neutral-900 dark:text-white">Your Tray</h2>
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl text-neutral-500 hover:text-neutral-700 transition-colors"
+                  className="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -105,72 +107,85 @@ export default function CartDrawer({
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 {cart.length > 0 ? (
                   cart.map((item) => (
-                    <div 
+                    <motion.div 
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
                       key={item.id} 
-                      className="flex items-center justify-between border border-neutral-100 dark:border-neutral-800 p-4 rounded-2xl bg-neutral-50/50 dark:bg-neutral-850/50 gap-4"
+                      className="flex items-center justify-between border border-neutral-100 dark:border-neutral-800 p-4 rounded-2xl bg-neutral-50/30 dark:bg-neutral-850/30 hover:bg-neutral-50/80 dark:hover:bg-neutral-850/80 hover:shadow-xs transition-all duration-300 gap-4"
                     >
                       <img 
                         src={item.image_url} 
                         alt={item.name} 
-                        className="w-16 h-16 rounded-xl object-cover bg-neutral-100 dark:bg-neutral-850 flex-shrink-0"
+                        className="w-16 h-16 rounded-xl object-cover bg-neutral-100 dark:bg-neutral-800 border border-neutral-200/20 shadow-xs flex-shrink-0"
                       />
                       
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-neutral-800 dark:text-neutral-150 truncate text-base">{item.name}</h4>
-                        <p className="text-sm font-semibold text-brand mt-0.5">Rs. {item.price}</p>
+                        <h4 className="font-display font-bold text-neutral-800 dark:text-neutral-100 truncate text-sm leading-tight">{item.name}</h4>
+                        <p className="text-xs font-extrabold text-brand mt-1">Rs. {item.price}</p>
                         
                         {/* Quantity switches */}
-                        <div className="flex items-center space-x-2 mt-2">
+                        <div className="flex items-center space-x-2 mt-2 bg-neutral-100/80 dark:bg-neutral-800/80 p-1 rounded-lg w-fit">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="p-1 hover:bg-neutral-200 dark:hover:bg-neutral-750 text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-200 rounded-md border border-neutral-200 dark:border-neutral-700"
+                            className="w-6 h-6 flex items-center justify-center bg-white dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-650 text-neutral-500 dark:text-neutral-200 rounded-md shadow-2xs transition-colors"
                           >
-                            <Minus size={12} />
+                            <Minus size={10} />
                           </button>
-                          <span className="font-bold text-sm px-2 text-neutral-700 dark:text-neutral-200">{item.quantity}</span>
+                          <span className="font-display font-bold text-xs px-2 text-neutral-700 dark:text-neutral-200">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="p-1 hover:bg-neutral-200 dark:hover:bg-neutral-750 text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-200 rounded-md border border-neutral-200 dark:border-neutral-700"
+                            className="w-6 h-6 flex items-center justify-center bg-white dark:bg-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-650 text-neutral-500 dark:text-neutral-200 rounded-md shadow-2xs transition-colors"
                           >
-                            <Plus size={12} />
+                            <Plus size={10} />
                           </button>
                         </div>
                       </div>
 
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="p-2 text-neutral-400 hover:text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                        className="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all duration-200"
                         aria-label="Remove item"
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={15} />
                       </button>
-                    </div>
+                    </motion.div>
                   ))
                 ) : (
-                  <div className="text-center py-16 space-y-4 text-neutral-400 dark:text-neutral-500 max-w-[280px] mx-auto">
-                    <ShoppingBag size={48} className="mx-auto text-neutral-300 dark:text-neutral-750 animate-pulse" />
+                  <div className="text-center py-20 px-4 space-y-5 text-neutral-400 dark:text-neutral-500 max-w-[280px] mx-auto flex flex-col items-center">
+                    <div className="h-16 w-16 rounded-full bg-brand/10 dark:bg-brand/20 text-brand flex items-center justify-center shadow-lg shadow-brand/5">
+                      <ShoppingBag size={28} className="animate-pulse" />
+                    </div>
                     <div>
-                      <p className="font-bold text-neutral-700 dark:text-neutral-355 text-base">Your cart is empty</p>
-                      <p className="text-xs text-neutral-400 mt-1 leading-normal">
-                        Browse our dishes and add some mouthwatering meals to your tray!
+                      <p className="font-display font-bold text-neutral-700 dark:text-neutral-200 text-base">Your tray is empty</p>
+                      <p className="text-xs text-neutral-400 dark:text-neutral-500 mt-2 leading-relaxed">
+                        Browse our fresh food catalog and add some delicious homemade delicacies to your cart.
                       </p>
                     </div>
+                    <button
+                      onClick={onClose}
+                      className="bg-brand hover:bg-brand-600 text-white font-bold text-xs px-5 py-3 rounded-xl transition-all hover:scale-[1.02] shadow-md shadow-brand/10"
+                    >
+                      Start Ordering
+                    </button>
                   </div>
                 )}
               </div>
 
               {/* Footer Forms & Checkout Actions */}
               {cart.length > 0 && (
-                <div className="p-6 border-t border-neutral-150 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-850/50 space-y-4">
-                  <form onSubmit={handleWhatsAppOrder} className="space-y-3">
-                    <h3 className="font-bold text-sm text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
-                      Delivery Details
-                    </h3>
+                <div className="p-6 border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-850/50 space-y-4">
+                  <form onSubmit={handleWhatsAppOrder} className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-display font-bold text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-widest">
+                        Delivery Details
+                      </h3>
+                    </div>
                     
                     {/* User Name */}
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                        <UserIcon size={15} />
+                        <UserIcon size={14} />
                       </div>
                       <input
                         type="text"
@@ -178,38 +193,38 @@ export default function CartDrawer({
                         placeholder="Your Full Name"
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
-                        className="w-full pl-10 pr-3 py-2.5 bg-white dark:bg-neutral-850 border border-neutral-200 dark:border-neutral-750 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand text-neutral-850 dark:text-neutral-100 font-semibold"
+                        className="w-full pl-10 pr-4 py-3 bg-white dark:bg-neutral-850 border border-neutral-200/80 dark:border-neutral-750 rounded-xl text-xs focus:ring-1 focus:ring-brand focus:border-brand text-neutral-800 dark:text-neutral-100 font-semibold shadow-2xs"
                       />
                     </div>
 
                     {/* User Address */}
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
-                        <MapPin size={15} />
+                        <MapPin size={14} />
                       </div>
                       <input
                         type="text"
                         required
-                        placeholder="Delivery Address (e.g. Lazimpat, Kathmandu)"
+                        placeholder="Delivery Location (e.g. Bharatpur, Nepal)"
                         value={deliveryAddress}
                         onChange={(e) => setDeliveryAddress(e.target.value)}
-                        className="w-full pl-10 pr-3 py-2.5 bg-white dark:bg-neutral-850 border border-neutral-200 dark:border-neutral-750 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand text-neutral-850 dark:text-neutral-100 font-semibold"
+                        className="w-full pl-10 pr-4 py-3 bg-white dark:bg-neutral-850 border border-neutral-200/80 dark:border-neutral-750 rounded-xl text-xs focus:ring-1 focus:ring-brand focus:border-brand text-neutral-800 dark:text-neutral-100 font-semibold shadow-2xs"
                       />
                     </div>
 
                     {/* Subtotal summary */}
                     <div className="pt-2 flex justify-between items-center text-neutral-900 dark:text-white font-display">
-                      <span className="font-semibold text-neutral-500">Order Total:</span>
-                      <span className="font-extrabold text-2xl text-brand">Rs. {totalPrice}</span>
+                      <span className="font-bold text-neutral-500 text-xs uppercase tracking-wide">Grand Total:</span>
+                      <span className="font-black text-2xl text-brand">Rs. {totalPrice}</span>
                     </div>
 
                     {/* WhatsApp Action Button */}
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-md hover:scale-[1.01] active:scale-[0.99] transition-all duration-200"
+                      className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-display font-bold py-4 px-4 rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-[1.015] active:scale-[0.985] transition-all duration-200 text-sm tracking-wide"
                     >
-                      <Send size={18} />
-                      <span>Place Order on WhatsApp</span>
+                      <Send size={15} />
+                      <span>Order on WhatsApp (Home Delivery)</span>
                     </button>
                   </form>
                 </div>

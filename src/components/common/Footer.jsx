@@ -8,7 +8,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-neutral-950 dark:bg-black text-neutral-400 pt-16 pb-10 border-t border-neutral-900 overflow-hidden">
+    <footer className="relative bg-neutral-950 dark:bg-black text-neutral-400 pt-20 pb-10 overflow-hidden">
+      {/* Smooth Wave Divider at the top of the footer */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none transform -translate-y-[98%] pointer-events-none">
+        <svg className="relative block w-full h-[40px] text-neutral-950 dark:text-black" viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ fill: 'currentColor' }}>
+          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C26.9,8.75,57.05,18.3,90.35,27.14,196,55.51,263.38,64.24,321.39,56.44Z"></path>
+        </svg>
+      </div>
+
       {/* Subtle brand color glow in background */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-accent-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -99,7 +106,7 @@ export default function Footer() {
           <div className="flex items-center gap-1.5 font-semibold">
             <span>Made with</span>
             <Heart size={12} className="text-brand fill-brand animate-pulse" />
-            <span>by Rohan & Anita</span>
+            <span>by Sujan G.C.</span>
           </div>
           <span>&copy; {new Date().getFullYear()} Good Food Cloud Kitchen & Restaurant. All Rights Reserved.</span>
         </div>

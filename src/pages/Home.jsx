@@ -46,7 +46,7 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
       name: "Pooja Karki",
       role: "Working Mother",
       stars: 5,
-      comment: "Clean, fresh, and tastes exactly like my mom's kitchen. You can tell Rohan and Anita cook with pure dedication. High recommendations!"
+      comment: "Clean, fresh, and tastes exactly like my mom's kitchen. You can tell Sujan G.C. cooks with pure dedication. High recommendations!"
     },
     {
       name: "Kabir Thapa",
@@ -67,9 +67,21 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
     <div className="space-y-0">
       
       {/* 1. HERO BANNER */}
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-brand-50 via-white to-accent-50/30 dark:from-darkBg-dark dark:via-darkBg dark:to-brand-950/20 pt-16">
-        <div className="absolute top-1/4 left-1/10 w-72 h-72 bg-brand-200 dark:bg-brand-900/10 rounded-full blur-3xl opacity-30 animate-pulse pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/10 w-96 h-96 bg-accent-200 dark:bg-accent-950/10 rounded-full blur-3xl opacity-30 animate-pulse pointer-events-none" />
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-neutral-950">
+        {/* Background Video */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-35 dark:opacity-20"
+          >
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-frying-diced-vegetables-in-a-pan-40538-large.mp4" type="video/mp4" />
+          </video>
+          {/* Dark Glassy Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-950/40 via-neutral-950/80 to-accent-950/30 dark:from-black/60 dark:via-neutral-950/90 dark:to-black/40" />
+        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -96,9 +108,9 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
               <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center space-x-2 bg-brand-100 dark:bg-brand-900/30 text-brand px-4 py-2 rounded-full text-sm font-semibold tracking-wide"
+                className="inline-flex items-center space-x-2 bg-brand-100/10 dark:bg-brand-900/30 text-brand-300 dark:text-brand px-4 py-2 rounded-full text-sm font-semibold tracking-wide border border-brand/20 backdrop-blur-xs"
               >
-                <Sparkles size={16} className="text-accent-600 animate-spin-slow" />
+                <Sparkles size={16} className="text-accent animate-spin-slow" />
                 <span>Taste the Love in Every Bite</span>
               </motion.div>
 
@@ -106,10 +118,10 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight text-neutral-900 dark:text-white"
+                className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight text-white"
               >
                 Fresh Homemade Food <br />
-                <span className="bg-gradient-to-r from-brand to-accent-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-brand to-accent-400 bg-clip-text text-transparent">
                   Delivered 24/7
                 </span>
               </motion.h1>
@@ -118,9 +130,9 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-lg text-neutral-600 dark:text-neutral-300 max-w-xl mx-auto lg:mx-0 font-medium"
+                className="text-lg text-neutral-200 dark:text-neutral-300 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed"
               >
-                Based in Bharatpur and delivering fresh homemade food across Bharatpur. Experience 24/7 fast home delivery from our two outlets in the city, prepared with love and care by Anita & Rohan.
+                Based in Bharatpur and delivering fresh homemade food across Bharatpur. Experience 24/7 fast home delivery from our two outlets in the city, prepared with love and care by Sujan G.C.
               </motion.p>
 
               {/* Delivery Availability Status */}
@@ -129,11 +141,11 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
                 className={`flex items-center justify-center lg:justify-start gap-3 text-sm ${
-                  isDeliveryAvailable ? 'text-green-600 dark:text-green-400' : 'text-neutral-500'
+                  isDeliveryAvailable ? 'text-green-400' : 'text-neutral-400'
                 }`}
               >
-                <div className="flex items-center justify-center bg-white dark:bg-neutral-800 p-2 rounded-lg shadow-sm border border-neutral-100 dark:border-neutral-700">
-                  <Clock size={16} className={isDeliveryAvailable ? 'animate-pulse text-green-500' : ''} />
+                <div className="flex items-center justify-center bg-white/10 backdrop-blur-md p-2 rounded-lg shadow-sm border border-white/10">
+                  <Clock size={16} className={isDeliveryAvailable ? 'animate-pulse text-green-400' : 'text-neutral-400'} />
                 </div>
                 <span className="font-semibold tracking-wider uppercase text-xs">
                   {isDeliveryAvailable ? '⚡ 24/7 Delivery Available Now' : '⏸️ Delivering Closed Temporarily'}
@@ -232,7 +244,13 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             {/* Split Images */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4 relative">
+            <motion.div 
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-5 grid grid-cols-2 gap-4 relative"
+            >
               <div className="absolute inset-0 border-2 border-brand/10 dark:border-brand/5 rounded-3xl -m-4 pointer-events-none" />
               
               <div className="space-y-4">
@@ -268,10 +286,16 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Context */}
-            <div className="lg:col-span-7 space-y-8">
+            <motion.div 
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-7 space-y-8"
+            >
               <div className="space-y-3">
                 <span className="font-display font-bold uppercase tracking-wider text-xs text-brand">
                   Our Kitchen's Heartbeat
@@ -286,7 +310,7 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
 
               <div className="space-y-4 text-neutral-600 dark:text-neutral-300 font-medium">
                 <p>
-                  <strong>Good Food</strong> was born out of a shared dream by Anita & Rohan to serve the people of Bharatpur. With two outlets in the city, our cloud kitchen provides fast, 24/7 delivery of fresh homemade meals directly to your doorstep.
+                  <strong>Good Food</strong> was born out of a shared dream by Sujan G.C. to serve the people of Bharatpur. With two outlets in the city, our cloud kitchen provides fast, 24/7 delivery of fresh homemade meals directly to your doorstep.
                 </p>
                 <p>
                   "We are passionate about home cooking and customer satisfaction. That is why we cook everything ourselves from scratch, using traditional family recipes and fresh local Bharatpur ingredients, bringing hot and hygienic food to you day or night."
@@ -328,7 +352,13 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
           </div>
 
           {featuredDishes.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
               {featuredDishes.map((item) => (
                 <div 
                   key={item.id} 
@@ -363,7 +393,7 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
           ) : (
             <p className="text-center text-neutral-500 text-sm">No featured dishes active yet.</p>
           )}
@@ -394,7 +424,13 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
             <div className="h-1.5 w-16 bg-brand mx-auto rounded-full" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
             {customerReviews.map((rev, i) => (
               <div 
                 key={i} 
@@ -419,7 +455,7 @@ export default function Home({ menuItems, isDeliveryAvailable, addToast }) {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
